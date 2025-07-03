@@ -22,7 +22,7 @@ class GruntBot(discord.Client):
 
 		if message.content.equals("!grunt"):
 			try:
-				with open('./grunts') as grunts_file:
+				with open('./grunts.txt') as grunts_file:
 					contents = grunts_file.readlines()
 				grunts = [line.strip() for line in contents]
 				grunt = random.choice(grunts)
