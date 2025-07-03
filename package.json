@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "openai": "^5.8.2",
+    "wrangler": "^4.22.0"
+  }
+}
