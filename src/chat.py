@@ -1,8 +1,6 @@
 import os
 import time
-
-from google import genai
-from google.genai import types
+import google.generativeai as genai
 
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
@@ -12,7 +10,8 @@ class chatsvc():
 		self._display_name = display_name
 		self._context = context
 		self._last_activity = time.time()
-		self._client = genai.Client(api_key=GOOGLE_API_KEY)
+		genai.configure(api_key=GOOGLE_API_KEY)
+		self._model = genai.GenerativeModel('gemini-1.5-flash')
 
 	@property
 	def name(self):
@@ -36,14 +35,15 @@ class chatsvc():
 			# Update last activity time
 			self._last_activity = time.time()
    
-			response = self._client.models.generate_content(
-				model="gemini-2.5-flash",
-				config=types.GenerateContentConfig(
-					system_instruction=self._context,),
-				contents=message
-			)
+			# Create a chat with the context as system instruction
+			chat = self._model.start_chat(history=[])
+			
+			# Send the message with context
+			full_message = f"{self._context}\n\nUser: {message}"
+			response = chat.send_message(full_message)
 
 			return response.text
 
 		except Exception as e:
 			print(f"Error: {e}")
+			return "Me tired, come back later"

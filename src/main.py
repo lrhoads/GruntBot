@@ -7,6 +7,9 @@ from dotenv import load_dotenv
 from chats import chats
 from chat import chatsvc
 
+# Load environment variables
+load_dotenv()
+
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 
 class GruntBot(discord.Client):
