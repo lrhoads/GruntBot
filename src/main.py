@@ -45,22 +45,13 @@ class GruntBot(discord.Client):
 		if message.author == self.user:
 			return
 
-		if message.content.lower() == "grunt":
-			try:
-				with open('./res/grunts.txt') as grunts_file:
-					contents = grunts_file.readlines()
-				grunts = [line.strip() for line in contents]
-				grunt = random.choice(grunts)
-				await message.channel.send(grunt)
-
-			except:
-				await message.channel.send("Zug zug")
-				return
-   
-		elif message.content.lower().startswith("grunt"):
+		# Check if "grunt" or "grunty" is mentioned anywhere in the message
+		message_lower = message.content.lower()
+		if "grunt" in message_lower or "grunty" in message_lower:
+			# AI response for any message containing "grunt" or "grunty" based on user profile
 			try:
 				chat = self.chats.get_chat(message.author.name)    
-				response = await chat.prompt(message.content[6:])  # Skip "grunt "    
+				response = await chat.prompt(message.content)
 				await message.channel.send(response)
     
 			except Exception as e:
