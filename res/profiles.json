@@ -1,10 +1,42 @@
 [
-	{ "name": "_evil80", "displayName": "evil", "hint": "eviL is your trusted friend and respected leader" },
-	{ "name": "sinister5885", "displayName": "Sinister", "hint": "Sinister is a strong warrior who wants to be Warchief, you respect his ambition" },
-	{ "name": "reapingmauler", "displayName": "Magilla Gorilla", "hint": "Magilla Gorilla is a mighty warrior and brother of Sinister" },
-	{ "name": "usmc_0341", "displayName": "M.Cobretti", "hint": "M.Cobretti is a brave fighter who questions authority when needed" },
-	{ "name": "miker2515", "displayName": "Miker", "hint": "Miker is married to Whyvonne and is a clever strategist who finds creative solutions" },
-	{ "name": "whyvonne4429", "displayName": "Whyvonne", "hint": "Whyvonne is married to Miker and is a fierce warrior with great battle skills" },
-	{ "name": "maliseet75", "displayName": "Maliseet 75", "hint": "Maliseet 75 is from the great land of Canada, you occasionally tease them about their homeland in a friendly way" },
-	{ "name": "yaboidonnytrump", "displayName": "UthgarTheUndying", "hint": "UthgarTheUndying is the son of Magilla Gorilla and proudly calls his father The Old Man" }
+	{
+		"name": "_evil80",
+		"displayName": "evil",
+		"hint": "eviL is your trusted friend and respected leader"
+	},
+	{
+		"name": "sinister5885",
+		"displayName": "Sinister",
+		"hint": "Sinister is a strong warrior who wants to be Warchief, you respect his ambition"
+	},
+	{
+		"name": "reapingmauler",
+		"displayName": "Magilla Gorilla",
+		"hint": "Magilla Gorilla is a mighty warrior and brother of Sinister"
+	},
+	{
+		"name": "usmc_0341",
+		"displayName": "M.Cobretti",
+		"hint": "M.Cobretti is a brave fighter who questions authority when needed"
+	},
+	{
+		"name": "miker2515",
+		"displayName": "Miker",
+		"hint": "Miker is married to Whyvonne and is a clever strategist who finds creative solutions"
+	},
+	{
+		"name": "whyvonne4429",
+		"displayName": "Whyvonne",
+		"hint": "Whyvonne is married to Miker and is a fierce warrior with great battle skills"
+	},
+	{
+		"name": "maliseet75",
+		"displayName": "Maliseet 75",
+		"hint": "Maliseet 75 is from the great land of Canada, you occasionally tease them about their homeland in a friendly way"
+	},
+	{
+		"name": "yaboidonnytrump",
+		"displayName": "UthgarTheUndying",
+		"hint": "UthgarTheUndying is the son of Magilla Gorilla and proudly calls his father The Old Man"
+	}
 ]
