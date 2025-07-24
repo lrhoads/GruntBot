@@ -48,16 +48,30 @@ class GruntBot(discord.Client):
 		# Check if "grunt" or "grunty" is mentioned anywhere in the message
 		message_lower = message.content.lower()
 		if "grunt" in message_lower or "grunty" in message_lower:
-			# AI response for any message containing "grunt" or "grunty" based on user profile
-			try:
-				chat = self.chats.get_chat(message.author.name)    
-				response = await chat.prompt(message.content)
-				await message.channel.send(response)
-    
-			except Exception as e:
-				print(f"Error processing message: {e}")
-				await message.channel.send("Me tired, come back later")
-				return
+			
+			# Special handling for just "grunt" - give traditional grunt response
+			if message.content.lower().strip() == "grunt":
+				try:
+					with open('./res/grunts.txt') as grunts_file:
+						contents = grunts_file.readlines()
+					grunts = [line.strip() for line in contents]
+					grunt = random.choice(grunts)
+					await message.channel.send(grunt)
+				except:
+					await message.channel.send("Zug zug")
+					return
+			
+			else:
+				# AI response for any other message containing "grunt" or "grunty" based on user profile
+				try:
+					chat = self.chats.get_chat(message.author.name)    
+					response = await chat.prompt(message.content)
+					await message.channel.send(response)
+	    
+				except Exception as e:
+					print(f"Error processing message: {e}")
+					await message.channel.send("Me tired, come back later")
+					return
 
 intents = discord.Intents.default()
 intents.message_content = True
