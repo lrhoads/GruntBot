@@ -62,6 +62,12 @@ class GruntBot(discord.Client):
 					return
 			
 			else:
+				# Check for learning opportunities first
+				learning_response = self.chats.process_message_for_learning(message.author.name, message.content)
+				if learning_response:
+					await message.channel.send(learning_response)
+					return
+				
 				# AI response for any other message containing "grunt" or "grunty" based on user profile
 				try:
 					chat = self.chats.get_chat(message.author.name)    
