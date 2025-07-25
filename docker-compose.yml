@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  gruntbot:
+    build: .
+    container_name: gruntbot
+    restart: unless-stopped
+    environment:
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    volumes:
+      # Mount res directory to persist profile data
+      - ./res:/app/res
+      # Mount logs directory (optional)
+      - ./logs:/app/logs
+    env_file:
+      - .env
+    # Uncomment if you want to expose any ports for monitoring/health checks
+    # ports:
+    #   - "8080:8080"
+    
+    # Resource limits (optional but recommended)
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+        reservations:
+          memory: 256M
+          cpus: '0.25'
+    
+    # Logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Optional: Add a monitoring service (uncomment if needed)
+  # watchtower:
+  #   image: containrrr/watchtower
+  #   container_name: watchtower
+  #   restart: unless-stopped
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   environment:
+  #     - WATCHTOWER_POLL_INTERVAL=3600
+  #     - WATCHTOWER_CLEANUP=true
+  #   command: gruntbot
+
+networks:
+  default:
+    name: gruntbot-network

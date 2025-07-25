@@ -1,3 +1,11 @@
 .env
 310/
 __pycache__/
+
+# Docker
+logs/
+*.log
+
+# IDE
+.vscode/
+.idea/

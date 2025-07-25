@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  gruntbot:
+    build: .
+    container_name: gruntbot
+    restart: unless-stopped
+    environment:
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    volumes:
+      # Mount res directory to persist profile data
+      - ./res:/app/res
+      # Mount logs directory (optional)
+      - gruntbot-logs:/app/logs
+    env_file:
+      - .env
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+        reservations:
+          memory: 256M
+          cpus: '0.25'
+    
+    # Logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    
+    # Labels for Portainer
+    labels:
+      - "io.portainer.accesscontrol.teams=administrators"
+      - "description=GruntBot Discord Bot"
+      - "maintainer=GruntBot Team"
+      - "version=latest"
+
+# Named volumes for better management in Portainer
+volumes:
+  gruntbot-logs:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./logs
+
+networks:
+  default:
+    name: gruntbot-network
+    labels:
+      - "description=GruntBot network"

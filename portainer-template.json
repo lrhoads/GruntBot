@@ -1,0 +1,44 @@
+{
+  "version": 2,
+  "templates": [
+    {
+      "type": 3,
+      "title": "GruntBot Discord Bot",
+      "description": "World of Warcraft Orc themed Discord bot with AI learning capabilities",
+      "note": "A friendly Discord bot that learns about users and responds with Orc-themed messages",
+      "categories": ["Discord", "Bot", "Gaming"],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/docker-library/docs/c350af05d3fac7b5c3f6327ac82fe4d990d8729c/docker/logo.png",
+      "repository": {
+        "url": "https://github.com/lrhoads/GruntBot",
+        "stackfile": "docker-compose.portainer.yml"
+      },
+      "env": [
+        {
+          "name": "DISCORD_TOKEN",
+          "label": "Discord Bot Token",
+          "description": "Your Discord bot token from Discord Developer Portal",
+          "default": ""
+        },
+        {
+          "name": "GOOGLE_API_KEY",
+          "label": "Google AI API Key",
+          "description": "Your Google Generative AI API key",
+          "default": ""
+        }
+      ],
+      "volumes": [
+        {
+          "container": "/app/res",
+          "bind": "./gruntbot/res",
+          "readonly": false
+        },
+        {
+          "container": "/app/logs",
+          "bind": "./gruntbot/logs",
+          "readonly": false
+        }
+      ]
+    }
+  ]
+}
