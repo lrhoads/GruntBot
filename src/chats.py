@@ -24,7 +24,7 @@ class chats:
 		elif not chat.is_active:
 			del chat
 			chat = None
-			self.chats[name] = None
+			self._chats[name] = None
       
 		if not chat:
 			profile = self.load_profile(name)
