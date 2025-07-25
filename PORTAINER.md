@@ -100,10 +100,17 @@ Add these environment variables in the **Environment variables** section:
 
 ## Troubleshooting
 
+### Deployment Error: "env file not found"
+If you get an error like `failed to resolve services environment: env file /data/compose/24/.env not found`, this means:
+1. The stack is looking for a `.env` file that doesn't exist in Portainer
+2. **Solution**: Make sure you're using `docker-compose.portainer.yml` (not the regular `docker-compose.yml`)
+3. The Portainer version doesn't need a `.env` file - it uses environment variables set in the Portainer UI
+
 ### Container Won't Start
 1. Check **Logs** for error messages
-2. Verify environment variables are set correctly
+2. Verify environment variables are set correctly in Portainer
 3. Ensure Discord token and Google API key are valid
+4. Make sure both `DISCORD_TOKEN` and `GOOGLE_API_KEY` are set in the Environment Variables section
 
 ### Bot Not Responding
 1. Check container is running in **Containers** view

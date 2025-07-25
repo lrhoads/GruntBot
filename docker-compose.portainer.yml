@@ -13,8 +13,6 @@ services:
       - ./res:/app/res
       # Mount logs directory (optional)
       - gruntbot-logs:/app/logs
-    env_file:
-      - .env
     
     # Resource limits
     deploy:
