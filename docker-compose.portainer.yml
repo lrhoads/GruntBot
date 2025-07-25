@@ -9,9 +9,9 @@ services:
       - DISCORD_TOKEN=${DISCORD_TOKEN}
       - GOOGLE_API_KEY=${GOOGLE_API_KEY}
     volumes:
-      # Mount res directory to persist profile data
-      - ./res:/app/res
-      # Mount logs directory (optional)
+      # Mount res directory to persist profile data - use named volume
+      - gruntbot-profiles:/app/res
+      # Mount logs directory - use named volume  
       - gruntbot-logs:/app/logs
     
     # Resource limits
@@ -40,12 +40,10 @@ services:
 
 # Named volumes for better management in Portainer
 volumes:
+  gruntbot-profiles:
+    driver: local
   gruntbot-logs:
     driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ./logs
 
 networks:
   default:

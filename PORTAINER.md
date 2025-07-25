@@ -84,21 +84,27 @@ Add these environment variables in the **Environment variables** section:
 
 ### Manage Profiles
 1. Go to **Volumes**
-2. Click **Browse** on `gruntbot-data`
+2. Click **Browse** on `gruntbot_gruntbot-profiles` volume
 3. Navigate to view/edit `profiles.json`
 
 ## Backup Configuration
 
 ### Backup User Profiles
-1. Go to **Volumes** → `gruntbot-data`
+1. Go to **Volumes** → `gruntbot_gruntbot-profiles`
 2. Click **Browse**
 3. Download `profiles.json` file
 
 ### Restore Profiles
-1. Upload `profiles.json` back to the volume
+1. Upload `profiles.json` back to the `gruntbot_gruntbot-profiles` volume
 2. Restart the container
 
 ## Troubleshooting
+
+### Deployment Error: "failed to mount local volume"
+If you get an error like `failed to mount local volume: mount /data/compose/25/logs`, this means:
+1. The stack is trying to bind mount directories that don't exist
+2. **Solution**: Make sure you're using `docker-compose.portainer.yml` which uses named volumes
+3. Named volumes are automatically created by Docker and don't require local directories
 
 ### Deployment Error: "env file not found"
 If you get an error like `failed to resolve services environment: env file /data/compose/24/.env not found`, this means:
