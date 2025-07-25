@@ -14,7 +14,7 @@ This guide shows you how to deploy GruntBot using Portainer for easy container m
 2. **Build method**: Choose "Git Repository"
 3. **Repository URL**: `https://github.com/lrhoads/GruntBot`
 4. **Reference**: `refs/heads/main`
-5. **Compose path**: `docker-compose.portainer.yml`
+5. **Compose path**: `docker-compose.clean.yml` (use this clean version)
 
 ### Step 3: Environment Variables
 Add these environment variables in the **Environment variables** section:
@@ -103,8 +103,33 @@ Add these environment variables in the **Environment variables** section:
 ### Deployment Error: "failed to mount local volume"
 If you get an error like `failed to mount local volume: mount /data/compose/25/logs`, this means:
 1. The stack is trying to bind mount directories that don't exist
-2. **Solution**: Make sure you're using `docker-compose.portainer.yml` which uses named volumes
-3. Named volumes are automatically created by Docker and don't require local directories
+2. **Solution 1**: Make sure you're using `docker-compose.clean.yml` (the cleanest version)
+3. **Solution 2**: If still failing, try this manual approach:
+   - Delete the failing stack in Portainer
+   - Go to **Volumes** and delete any existing gruntbot volumes
+   - Redeploy using `docker-compose.clean.yml`
+4. **Solution 3**: Use the manual container creation method below instead
+
+### Alternative: Manual Container Creation (if stack fails)
+If the stack deployment keeps failing, create the container manually:
+
+1. **Go to Containers** → **Add container**
+2. **Name**: `gruntbot`
+3. **Image**: Build from Git:
+   - **Repository**: `https://github.com/lrhoads/GruntBot`
+   - **Reference**: `main`
+4. **Environment variables**:
+   ```
+   DISCORD_TOKEN=your_discord_token_here
+   GOOGLE_API_KEY=your_google_api_key_here
+   PYTHONPATH=/app
+   PYTHONUNBUFFERED=1
+   ```
+5. **Volumes**: Create named volumes:
+   - Container: `/app/res` → Volume: Create new volume `gruntbot-profiles`
+   - Container: `/app/logs` → Volume: Create new volume `gruntbot-logs`
+6. **Restart policy**: `Unless stopped`
+7. **Deploy the container**
 
 ### Deployment Error: "env file not found"
 If you get an error like `failed to resolve services environment: env file /data/compose/24/.env not found`, this means:

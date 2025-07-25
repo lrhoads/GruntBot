@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  gruntbot:
+    build: .
+    container_name: gruntbot
+    restart: unless-stopped
+    environment:
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+    volumes:
+      # Use named volumes only - no bind mounts
+      - gruntbot-profiles:/app/res
+      - gruntbot-logs:/app/logs
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+        reservations:
+          memory: 256M
+          cpus: '0.25'
+    
+    # Logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    
+    # Labels for Portainer
+    labels:
+      - "io.portainer.accesscontrol.teams=administrators"
+      - "description=GruntBot Discord Bot with AI Learning"
+      - "maintainer=GruntBot Team"
+      - "version=latest"
+
+# Named volumes - Docker manages these automatically
+volumes:
+  gruntbot-profiles:
+    driver: local
+  gruntbot-logs:
+    driver: local
+
+networks:
+  default:
+    name: gruntbot-network
+    labels:
+      - "description=GruntBot Network"
