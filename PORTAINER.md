@@ -14,7 +14,7 @@ This guide shows you how to deploy GruntBot using Portainer for easy container m
 2. **Build method**: Choose "Git Repository"
 3. **Repository URL**: `https://github.com/lrhoads/GruntBot`
 4. **Reference**: `refs/heads/main`
-5. **Compose path**: `docker-compose.clean.yml` (use this clean version)
+5. **Compose path**: `docker-compose.portainer.yml`
 
 ### Step 3: Environment Variables
 Add these environment variables in the **Environment variables** section:
@@ -87,6 +87,11 @@ Add these environment variables in the **Environment variables** section:
 2. Click **Browse** on `gruntbot_gruntbot-profiles` volume
 3. Navigate to view/edit `profiles.json`
 
+### View Application Logs
+1. Go to **Containers**
+2. Click on `gruntbot`
+3. Click **Logs** tab to view all application logs
+
 ## Backup Configuration
 
 ### Backup User Profiles
@@ -102,13 +107,9 @@ Add these environment variables in the **Environment variables** section:
 
 ### Deployment Error: "failed to mount local volume"
 If you get an error like `failed to mount local volume: mount /data/compose/25/logs`, this means:
-1. The stack is trying to bind mount directories that don't exist
-2. **Solution 1**: Make sure you're using `docker-compose.clean.yml` (the cleanest version)
-3. **Solution 2**: If still failing, try this manual approach:
-   - Delete the failing stack in Portainer
-   - Go to **Volumes** and delete any existing gruntbot volumes
-   - Redeploy using `docker-compose.clean.yml`
-4. **Solution 3**: Use the manual container creation method below instead
+1. **FIXED**: The updated `docker-compose.portainer.yml` no longer mounts a logs directory
+2. **Solution**: The new version only mounts the profiles directory - logs are accessible through Portainer's log viewer
+3. **If still failing**: Delete the stack and redeploy - the issue should now be resolved
 
 ### Alternative: Manual Container Creation (if stack fails)
 If the stack deployment keeps failing, create the container manually:
@@ -125,9 +126,9 @@ If the stack deployment keeps failing, create the container manually:
    PYTHONPATH=/app
    PYTHONUNBUFFERED=1
    ```
-5. **Volumes**: Create named volumes:
+5. **Volumes**: Create named volume:
    - Container: `/app/res` → Volume: Create new volume `gruntbot-profiles`
-   - Container: `/app/logs` → Volume: Create new volume `gruntbot-logs`
+   - (Logs will be accessible through Portainer's log viewer)
 6. **Restart policy**: `Unless stopped`
 7. **Deploy the container**
 

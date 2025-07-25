@@ -11,8 +11,7 @@ services:
     volumes:
       # Mount res directory to persist profile data - use named volume
       - gruntbot-profiles:/app/res
-      # Mount logs directory - use named volume  
-      - gruntbot-logs:/app/logs
+      # Logs will stay in container (accessible via Portainer logs)
     
     # Resource limits
     deploy:
@@ -41,8 +40,6 @@ services:
 # Named volumes for better management in Portainer
 volumes:
   gruntbot-profiles:
-    driver: local
-  gruntbot-logs:
     driver: local
 
 networks:
