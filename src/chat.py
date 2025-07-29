@@ -1,6 +1,7 @@
 import os
 import time
 import random
+import asyncio
 import google.generativeai as genai
 
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
@@ -65,10 +66,18 @@ class chatsvc():
 			
 			# Send the message with context
 			full_message = f"{self._context}\n\nUser: {message}"
-			response = chat.send_message(full_message)
+			
+			# Use asyncio.wait_for to add timeout to prevent blocking
+			response = await asyncio.wait_for(
+				asyncio.to_thread(chat.send_message, full_message),
+				timeout=30.0  # 30 second timeout
+			)
 
 			return response.text
 
+		except asyncio.TimeoutError:
+			print("API call timed out after 30 seconds")
+			return "Me brain slow today, try again later"
 		except Exception as e:
 			print(f"Error: {e}")
 			return "Me tired, come back later"
