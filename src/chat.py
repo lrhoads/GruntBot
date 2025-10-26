@@ -8,11 +8,12 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 # List of model names to try in order of preference
 MODEL_NAMES = [
-    'gemini-1.5-flash-latest',
-    'gemini-1.5-flash',
-    'gemini-1.5-pro-latest',
-    'gemini-1.5-pro',
-    'gemini-pro'
+    'gemini-2.5-flash',
+    'gemini-2.0-flash', 
+    'gemini-flash-latest',
+    'gemini-2.5-pro',
+    'gemini-2.0-pro-exp',
+    'gemini-pro-latest'
 ]
 
 class chatsvc():
