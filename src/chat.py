@@ -6,6 +6,15 @@ import google.generativeai as genai
 
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
+# List of model names to try in order of preference
+MODEL_NAMES = [
+    'gemini-1.5-flash-latest',
+    'gemini-1.5-flash',
+    'gemini-1.5-pro-latest',
+    'gemini-1.5-pro',
+    'gemini-pro'
+]
+
 class chatsvc():
 	def __init__(self, name, display_name, context):
 		self._name = name
@@ -37,7 +46,31 @@ class chatsvc():
 		self._context = f"{context}\n\n{arma_hint}\n\n{temperament_hint}"
 		self._last_activity = time.time()
 		genai.configure(api_key=GOOGLE_API_KEY)
-		self._model = genai.GenerativeModel('gemini-1.5-flash')
+		self._model = self._initialize_model()
+
+	def _initialize_model(self):
+		"""Initialize the generative model with fallback options"""
+		# First, let's list available models for debugging
+		try:
+			print("Listing available models...")
+			models = genai.list_models()
+			available_models = [model.name for model in models if 'generateContent' in model.supported_generation_methods]
+			print(f"Available models for generateContent: {available_models}")
+		except Exception as e:
+			print(f"Failed to list models: {e}")
+		
+		for model_name in MODEL_NAMES:
+			try:
+				print(f"Trying to initialize model: {model_name}")
+				model = genai.GenerativeModel(model_name)
+				print(f"Successfully initialized model: {model_name}")
+				return model
+			except Exception as e:
+				print(f"Failed to initialize {model_name}: {e}")
+				continue
+		
+		# If all models fail, raise an exception
+		raise Exception("Unable to initialize any Gemini model. Please check your API key and model availability.")
 
 	@property
 	def name(self):
